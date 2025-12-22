@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "review": "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.",
+    "name": "Awlad Hossin",
+    "post": "Senior Product Designer"
+  },
+  {
+    "id": 2,
+    "review": "This smartwatch has completely changed how I track my daily fitness. The heart rate monitor is accurate and the battery lasts for days.",
+    "name": "Sara Ahmed",
+    "post": "Fitness Enthusiast"
+  },
+  {
+    "id": 3,
+    "review": "I love the ergonomic design of this office chair. It supports my lower back perfectly and reduces fatigue during long work hours.",
+    "name": "Rifat Khan",
+    "post": "UI/UX Designer"
+  },
+  {
+    "id": 4,
+    "review": "The noise-canceling headphones are incredible. I can focus on work without distractions, and the sound quality is top-notch.",
+    "name": "Nabila Rahman",
+    "post": "Software Engineer"
+  },
+  {
+    "id": 5,
+    "review": "These wireless earbuds fit comfortably and stay in place even during intense workouts. The sound is crisp and balanced.",
+    "name": "Tanvir Hossain",
+    "post": "Digital Marketer"
+  },
+  {
+    "id": 6,
+    "review": "I’ve been using this skincare serum for a month, and my skin feels smoother and more hydrated. Highly recommend!",
+    "name": "Mousumi Sultana",
+    "post": "Beauty Blogger"
+  },
+  {
+    "id": 7,
+    "review": "The laptop cooling pad keeps my system cool even during heavy gaming sessions. Very sturdy and well-built.",
+    "name": "Fahim Chowdhury",
+    "post": "Gamer & Tech Reviewer"
+  },
+  {
+    "id": 8,
+    "review": "This travel backpack is spacious, lightweight, and has excellent compartments for organizing all my gear. Perfect for trips.",
+    "name": "Ayesha Karim",
+    "post": "Travel Blogger"
+  }
+]

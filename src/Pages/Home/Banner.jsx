@@ -10,7 +10,7 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules"; //required (3
 import arrowIcon from "../../assets/arrow.png";
 const Banner = () => {
   return (
-    <div className="relative">
+    <div className="relative banner-carousel">
       <Swiper
         className="mt-7 "
         modules={[Autoplay, Pagination, EffectFade]} //required (4)
@@ -18,7 +18,6 @@ const Banner = () => {
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
-          pauseOnMouseEnter: true,
         }}
         speed={2000}
         effect="fade"

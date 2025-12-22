@@ -29,7 +29,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="max-w-295 mx-auto py-24">
+    <div className="max-w-6xl mx-auto py-24">
       <h2 className="font-extrabold text-3xl text-[#03373D] mb-7">
         How it Works
       </h2>

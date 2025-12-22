@@ -10,7 +10,8 @@ body {
 @import "tailwindcss";
 @plugin "daisyui";
 
-.swiper .swiper-pagination-bullet {
+/*Banner Carousel with Swiper*/
+.banner-carousel .swiper-pagination-bullet {
   height: 4px;
   width: 24px;
   border-radius: 4px;
@@ -18,30 +19,55 @@ body {
   opacity: 30%;
 }
 
-.swiper .swiper-pagination-bullet-active {
+.banner-carousel .swiper-pagination-bullet-active {
   height: 4px;
   width: 48px;
   border-radius: 4px;
   background-color: #035861;
   opacity: 100%;
 }
-.swiper .swiper-pagination {
+.banner-carousel .swiper-pagination {
   bottom: 76px !important;
   left: 88px !important;
   text-align: left;
 }
 
 @media screen and (max-width: 600px) {
-  .swiper .swiper-pagination {
+  .banner-carousel .swiper-pagination {
     text-align: center;
     bottom: 0 !important;
     left: 0 !important;
   }
-  .swiper .swiper-pagination-bullet {
+  .banner-carousel .swiper-pagination-bullet {
     height: 3px;
     width: 20px;
   }
-  .swiper .swiper-pagination-bullet-active {
+  .banner-carousel .swiper-pagination-bullet-active {
     width: 36px;
   }
+}
+
+/*Review Section*/
+.swiper {
+  overflow: visible;
+}
+
+.swiper-slide {
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/*Review carousel with swiper*/
+.review-carousel .swiper-pagination {
+  bottom: 44px !important;
+  left: 48% !important;
+  transform: translateX(-50%) !important;
+}
+.review-carousel .swiper-pagination-bullet {
+  background-color: #94c6cb;
+  opacity: 1;
+  /* transform: scale(1) !important; to make all the bullets same*/
+}
+.review-carousel .swiper-pagination-bullet-active {
+  background-color: #03373d !important;
+  opacity: 1 !important;
 }
