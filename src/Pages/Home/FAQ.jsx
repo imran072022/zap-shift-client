@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-
+import arrowIcon from "../../assets/arrow.png";
 const FAQ = () => {
   const [open, setOpen] = useState(null);
   const faq = [
@@ -32,8 +32,8 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto my-16 px-0 md:px-24">
-      <div className="mb-10">
+    <div className="max-w-6xl mx-auto my-16 px-0 md:px-24 mb-24">
+      <div>
         <h2 className="text-[#03373D] font-extrabold text-3xl md:text-4xl text-center mb-6">
           Frequently Asked Question (FAQ)
         </h2>
@@ -43,38 +43,47 @@ const FAQ = () => {
           with ease!
         </p>
       </div>
-
-      {faq.map((item, index) => {
-        const isOpen = open === index;
-        return (
-          <div
-            className={`rounded-2xl border mx-2.5 md:mx-0 px-6 py-5 cursor-pointer mb-4 transition-all duration-300 ease-in-out ${
-              isOpen
-                ? "border-[#067A87] bg-[#E6F2F3]"
-                : "border-[#DADADA] bg-white"
-            }`}
-            onClick={() => setOpen(isOpen ? null : index)}
-          >
-            <div className="flex items-center justify-between">
-              <h4 className="font-bold text-[#03373D]">{item.question}</h4>
-              {isOpen ? (
-                <MdKeyboardArrowUp size={24} className="text-[#2B8282]" />
-              ) : (
-                <MdKeyboardArrowDown size={24} className="text-[#1F2937]" />
-              )}
-            </div>
-
+      <div className="my-10">
+        {" "}
+        {faq.map((item, index) => {
+          const isOpen = open === index;
+          return (
             <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              className={`rounded-2xl border mx-2.5 md:mx-0 px-6 py-5 cursor-pointer mb-4 transition-all duration-300 ease-in-out ${
+                isOpen
+                  ? "border-[#067A87] bg-[#E6F2F3]"
+                  : "border-[#DADADA] bg-white"
               }`}
+              onClick={() => setOpen(isOpen ? null : index)}
             >
-              <hr className="border border-[#C3DFE2] my-4 h-px" />
-              <p className=" text-[#606060]">{item.answer}</p>
+              <div className="flex items-center justify-between">
+                <h4 className="font-bold text-[#03373D]">{item.question}</h4>
+                {isOpen ? (
+                  <MdKeyboardArrowUp size={24} className="text-[#2B8282]" />
+                ) : (
+                  <MdKeyboardArrowDown size={24} className="text-[#1F2937]" />
+                )}
+              </div>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <hr className="border border-[#C3DFE2] my-4 h-px" />
+                <p className=" text-[#606060]">{item.answer}</p>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      <div className="flex justify-center">
+        <button className="text-[#1F1F1F] bg-[#CAEB66] px-6 py-2 font-bold rounded-xl cursor-pointer">
+          See More FAQ's
+        </button>
+        <img className="h-11 w-11 cursor-pointer" src={arrowIcon} alt="" />
+      </div>
     </div>
   );
 };
