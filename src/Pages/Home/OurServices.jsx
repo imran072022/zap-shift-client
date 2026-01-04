@@ -51,7 +51,7 @@ const OurServices = () => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="p-5 bg-white hover:bg-[#CAEB66] transition-bg duration-300 ease-in-out rounded-3xl"
+            className="p-5 bg-white hover:bg-[#CAEB66] transition-colors duration-300 ease-in-out rounded-3xl"
           >
             <div className="bg-gradient-to-b from-[#EEEDFC] to-[#eeedfc00] p-5 rounded-full  inline-block">
               <img className="w-9 h-9" src={item.icon} alt="" />

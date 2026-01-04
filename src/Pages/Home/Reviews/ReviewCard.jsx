@@ -10,7 +10,7 @@ const ReviewCard = ({ review }) => {
       </div>
 
       <div>
-        <hr className="border border-dashed mb-5" />
+        <div class=" h-px w-full bg-[repeating-linear-gradient(to_right,#03464D_0_4px,transparent_4px_8px)] mb-5"></div>
         <div className="flex items-center gap-3 ">
           <div className="bg-[#03464D] rounded-full w-10 h-10"></div>
           <div>
