@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 .urbanist {
   font-optical-sizing: auto;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
 }
 body {
   font-family: "Urbanist", sans-serif;
@@ -9,7 +14,7 @@ body {
 }
 @import "tailwindcss";
 @plugin "daisyui";
-
+@plugin "daisyui";
 /*Banner Carousel with Swiper*/
 .banner-carousel .swiper-pagination-bullet {
   height: 4px;
