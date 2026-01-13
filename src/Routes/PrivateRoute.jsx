@@ -10,7 +10,15 @@ const PrivateRoute = ({ children }) => {
     return <Loading></Loading>;
   }
   if (!user) {
-    return <Navigate to="/login" state={{ from: location }}></Navigate>;
+    return (
+      <Navigate
+        to="/login"
+        state={{
+          from: location,
+          message: "Your are not authorized to access this page!",
+        }}
+      ></Navigate>
+    );
   }
   return children;
 };

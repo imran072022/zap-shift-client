@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { email, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import { update } from "lodash";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 // --------------- Fixed Zod Schema ---------------
 const registerSchema = z.object({
@@ -37,9 +38,7 @@ const registerSchema = z.object({
     )
     .refine(
       (files) =>
-        ["image/jpg", "image/jpeg", "image/png", "image.webp"].includes(
-          files[0]?.type
-        ),
+        ["image/jpeg", "image/png", "image/webp"].includes(files[0]?.type),
       "Only .jpg, .png, .webp formats are allowed"
     ),
 });
@@ -47,6 +46,7 @@ const registerSchema = z.object({
 const Register = () => {
   const { signUp, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -75,19 +75,34 @@ const Register = () => {
     signUp(data.email, data.password)
       .then((userCredential) => {
         console.log(userCredential.user);
+        /*Storing profile pic in form data, sending them to imgbb store to save and get the url */
         const formData = new FormData();
         formData.append("image", profilePic);
         const img_API_URL = `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_hosted_img_apiKey
         }`;
         axios.post(img_API_URL, formData).then((res) => {
-          console.log("response", res.data.data.url);
+          const photoURL = res.data.data.url;
+
+          /*Send users data to db */
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user data has been sent to db");
+            }
+          });
+
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(userProfile)
             .then(() => {
+              console.log("profile picture updated successfully");
               navigate("/");
             })
             .catch((error) => {

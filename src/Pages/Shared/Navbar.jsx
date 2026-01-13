@@ -9,7 +9,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { logOut, user, loading } = useAuth();
   const navItems = [
-    { to: "/services", name: "Services" },
+    { to: "/dashboard", name: "Dashboard" },
     { to: "/coverage", name: "Coverage" },
     { to: "/about-us", name: "Average Us" },
     { to: "/pricing", name: "Pricing" },

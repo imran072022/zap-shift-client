@@ -1,12 +1,13 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 
 const SendParcel = () => {
   const serviceCenters = useLoaderData();
+  const navigate = useNavigate();
   const { handleSubmit, register, control } = useForm();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -42,7 +43,7 @@ const SendParcel = () => {
         cost = minCharge + extraFee;
       }
     }
-
+    data.cost = cost;
     Swal.fire({
       title: "Are you sure about the cost?",
       text: `Your have to pay total ${cost} TK.`,
@@ -53,12 +54,19 @@ const SendParcel = () => {
       confirmButtonText: "Yes, Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.post("/parcels", data).then((res) => console.log(res.data));
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your order has been placed!",
-        //   icon: "success",
-        // });
+        axiosSecure.post("/parcels", data).then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your parcel order has been placed!",
+              showConfirmButton: false,
+              timer: 2500,
+            });
+            navigate("/dashboard/my-parcels");
+          }
+        });
       }
     });
   };

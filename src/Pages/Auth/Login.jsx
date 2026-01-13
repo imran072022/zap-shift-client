@@ -7,6 +7,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -16,6 +17,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const message = location.state?.message;
+  const axiosSecure = useAxiosSecure();
   /*zod schema */
   const schema = z.object({
     email: z.string().min(1, "Email is required."),
@@ -55,7 +58,16 @@ const Login = () => {
     googleSignIn()
       .then((userCredential) => {
         console.log(userCredential);
-        navigate("/");
+        /*Send user data to db */
+        const userInfo = {
+          email: userCredential.user.email,
+          displayName: userCredential.user.displayName,
+          photoURL: userCredential.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          console.log("user data has been send to db", res.data);
+          navigate("/");
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -72,6 +84,11 @@ const Login = () => {
         {firebaseError && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-600 text-sm">{firebaseError}</p>
+          </div>
+        )}
+        {message && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600 text-sm">{message}</p>
           </div>
         )}
         {/* Email */}

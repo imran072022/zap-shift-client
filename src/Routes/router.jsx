@@ -10,6 +10,11 @@ import BeARider from "../Pages/BeARider/BeARider";
 import SendParcel from "../Pages/SendParcel/SendParcel";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import MyParcels from "../Pages/Dashboard/MyParcels";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import RiderApplications from "../Pages/Dashboard/RiderApplications/RiderApplications";
+import UsersManagement from "../Pages/Dashboard/UsersManagement/UsersManagement";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +37,7 @@ export const router = createBrowserRouter([
             <BeARider></BeARider>
           </PrivateRoute>
         ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
       {
         path: "send-parcel",
@@ -69,6 +75,26 @@ export const router = createBrowserRouter([
       {
         path: "my-parcels",
         Component: MyParcels,
+      },
+      {
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
+      },
+      {
+        path: "rider-applications",
+        Component: RiderApplications,
+      },
+      {
+        path: "users-management",
+        Component: UsersManagement,
       },
     ],
   },
