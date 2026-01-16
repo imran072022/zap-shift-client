@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import {
   FiHome,
   FiPackage,
@@ -15,13 +15,19 @@ import {
   FiChevronDown,
   FiMenu,
 } from "react-icons/fi";
-import { FaUsers } from "react-icons/fa6";
+import { FaMotorcycle, FaUsers } from "react-icons/fa6";
 import logoIcon from "../assets/logoIcon.png";
 import profileIcon from "../assets/profile.png";
+import useRole from "../Hooks/useRole";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const { role } = useRole();
+  const { logOut, user } = useAuth();
+  const navigate = useNavigate();
 
   // Menu items for top section
   const topMenuItems = [
@@ -36,11 +42,19 @@ const DashboardLayout = () => {
       icon: <FiShoppingBag size={20} />,
       label: "Rider Applications",
       path: "/dashboard/rider-applications",
+      adminOnly: true,
     },
     {
       icon: <FaUsers size={20} />,
-      label: "Users Management",
+      label: "Manage Users",
       path: "/dashboard/users-management",
+      adminOnly: true,
+    },
+    {
+      icon: <FaMotorcycle size={20} />,
+      label: "Assign Riders",
+      path: "/dashboard/assign-riders",
+      adminOnly: true,
     },
     {
       icon: <FiDollarSign size={20} />,
@@ -50,6 +64,11 @@ const DashboardLayout = () => {
     { icon: <FiMap size={20} />, label: "Coverage Area", path: "/coverage" },
   ];
 
+  /*Top menu items filtered for admin */
+  const filteredTopMenuItems =
+    role === "Admin"
+      ? topMenuItems
+      : topMenuItems.filter((item) => !item.adminOnly);
   // Menu items for bottom section
   const bottomMenuItems = [
     { icon: <FiSettings size={20} />, label: "Settings", path: "/settings" },
@@ -61,6 +80,17 @@ const DashboardLayout = () => {
     { icon: <FiHelpCircle size={20} />, label: "Help", path: "/help" },
     { icon: <FiLogOut size={20} />, label: "Logout", path: "/logout" },
   ];
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logged Out");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flex h-screen ">
@@ -105,7 +135,7 @@ const DashboardLayout = () => {
               </h2>
             )}
             <div className="space-y-1">
-              {topMenuItems.map((item, index) => (
+              {filteredTopMenuItems.map((item, index) => (
                 <NavLink
                   to={item.path}
                   key={index}
@@ -186,19 +216,27 @@ const DashboardLayout = () => {
               </button>
 
               {/* Profile Dropdown */}
-              <div className="relative">
+              <div className="relative  ">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center gap-2 md:gap-3 p-1 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex cursor-pointer items-center gap-2 md:gap-3 p-1 rounded-lg hover:bg-gray-50 transition-colors"
                   aria-label="User profile"
                 >
-                  <div className="w-10 h-10 rounded-full">
-                    <img src={profileIcon} alt="" />
+                  <div>
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt=""
+                        className="w-10 h-10 rounded-full"
+                      />
+                    ) : (
+                      <img src={profileIcon} alt="" />
+                    )}
                   </div>
                   <div className="hidden md:flex items-center gap-2">
                     <div className=" text-left">
-                      <p className="font-semibold">Imran Hasan</p>
-                      <p className="text-sm text-[#606060]">Admin</p>
+                      <p className="font-semibold">{user.displayName}</p>
+                      <p className="text-sm text-[#606060]">{role}</p>
                     </div>
                     <FiChevronDown
                       size={20}
@@ -220,12 +258,12 @@ const DashboardLayout = () => {
                 {profileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     <div className="px-4 py-3 border-b border-gray-100">
-                      <p className="font-medium text-gray-800">Imran Hasan</p>
-                      <p className="text-sm text-gray-500">
-                        imran072022@gmail.com
+                      <p className="font-medium text-gray-800">
+                        {user.displayName}
                       </p>
+                      <p className="text-sm text-gray-500">{user.email}</p>
                       <span className="inline-block mt-1 px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                        Administrator
+                        {role}
                       </span>
                     </div>
                     <div className="py-1">
@@ -245,13 +283,13 @@ const DashboardLayout = () => {
                       </a>
                     </div>
                     <div className="border-t border-gray-100 pt-1">
-                      <a
-                        href="/logout"
+                      <Link
+                        onClick={handleLogOut}
                         className="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors"
                       >
                         <FiLogOut size={16} />
                         <span>Logout</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 )}

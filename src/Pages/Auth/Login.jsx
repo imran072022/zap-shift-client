@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import imageUploadIcon from "../../assets/image-upload-icon.png";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
@@ -76,9 +75,7 @@ const Login = () => {
   return (
     <div className="inter">
       <h2 className="font-extrabold text-4xl mb-0.5">Welcome Back</h2>
-      <p>Login with ZapShift</p>
-
-      <img src={imageUploadIcon} alt="" className="my-4" />
+      <p className="mb-10">Login with ZapShift</p>
 
       <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col">
         {firebaseError && (

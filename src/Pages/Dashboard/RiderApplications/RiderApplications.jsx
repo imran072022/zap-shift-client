@@ -21,8 +21,8 @@ const RiderApplications = () => {
   const tableHeaders = [
     "Name",
     "Approval Status",
-    "Applied at",
     "Email",
+    "Working Status",
     "Actions",
   ];
 
@@ -87,10 +87,10 @@ const RiderApplications = () => {
                 >
                   {rider.approvalStatus}
                 </td>
-                <td className="py-3.5 px-6 text-[#4D4D4D]">
-                  {rider.appliedAt}
-                </td>
                 <td className="py-3.5 px-6 text-[#4D4D4D]">{rider.email}</td>
+                <td className="py-3.5 px-6 text-[#4D4D4D]">
+                  {rider.workingStatus}
+                </td>
                 <td className="py-3.5 px-6 ">
                   <button
                     onClick={() => handleApprove(rider)}

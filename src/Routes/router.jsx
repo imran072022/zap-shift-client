@@ -15,6 +15,9 @@ import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import RiderApplications from "../Pages/Dashboard/RiderApplications/RiderApplications";
 import UsersManagement from "../Pages/Dashboard/UsersManagement/UsersManagement";
+import AdminRoute from "./AdminRoute";
+import Forbidden403 from "../Components/Forbidden403";
+import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
 
 export const router = createBrowserRouter([
   {
@@ -90,12 +93,32 @@ export const router = createBrowserRouter([
       },
       {
         path: "rider-applications",
-        Component: RiderApplications,
+        element: (
+          <AdminRoute>
+            <RiderApplications></RiderApplications>
+          </AdminRoute>
+        ),
       },
       {
         path: "users-management",
-        Component: UsersManagement,
+        element: (
+          <AdminRoute>
+            <UsersManagement></UsersManagement>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "assign-riders",
+        element: (
+          <AdminRoute>
+            <AssignRiders></AssignRiders>
+          </AdminRoute>
+        ),
       },
     ],
+  },
+  {
+    path: "forbidden-route",
+    Component: Forbidden403,
   },
 ]);

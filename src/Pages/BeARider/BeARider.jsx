@@ -66,6 +66,7 @@ const BeARider = () => {
               type="text"
               placeholder="Your Name"
               {...register("name")}
+              defaultValue={user?.displayName}
               className="w-full h-10 border border-[#CBD5E1] rounded-lg px-3 text-slate-800 focus:bg-[#f0f9ff] transition-all 0.3s ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1"
             />
             {/*Driving license */}
@@ -87,6 +88,7 @@ const BeARider = () => {
               type="email"
               placeholder="Your Email"
               {...register("email")}
+              defaultValue={user?.email}
               className="w-full h-10 border border-[#CBD5E1] rounded-lg px-3 text-slate-800 focus:bg-[#f0f9ff] transition-all 0.3s ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1"
             />
             {/*Region */}

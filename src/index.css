@@ -76,3 +76,17 @@ body {
   background-color: #03373d !important;
   opacity: 1 !important;
 }
+
+/*Remove default cross button from search input*/
+.hide-search-clear {
+  &::-webkit-search-cancel-button {
+    display: none;
+    appearance: none;
+  }
+  &::-moz-search-cancel-button {
+    display: none;
+  }
+  &::-ms-clear {
+    display: none;
+  }
+}
