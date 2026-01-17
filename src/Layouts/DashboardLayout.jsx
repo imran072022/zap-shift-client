@@ -17,6 +17,7 @@ import {
 } from "react-icons/fi";
 import { FaMotorcycle, FaUsers } from "react-icons/fa6";
 import { CgMenuLeft } from "react-icons/cg";
+import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import logoIcon from "../assets/logoIcon.png";
 import profileIcon from "../assets/profile.png";
 import useRole from "../Hooks/useRole";
@@ -31,14 +32,10 @@ const DashboardLayout = () => {
   const { logOut, user } = useAuth();
 
   // Menu items
-  const topMenuItems = [
+  const menuItems = [
     { icon: <FiHome size={20} />, label: "Dashboard", path: "/dashboard" },
     { icon: <FiPackage size={20} />, label: "Deliveries", path: "/deliveries" },
-    {
-      icon: <FiFileText size={20} />,
-      label: "Invoices",
-      path: "/dashboard/payment-history",
-    },
+    /*Admin only routes */
     {
       icon: <FiShoppingBag size={20} />,
       label: "Rider Applications",
@@ -57,6 +54,19 @@ const DashboardLayout = () => {
       path: "/dashboard/assign-riders",
       adminOnly: true,
     },
+    /*Rider only routes */
+    {
+      icon: <HiOutlineInboxArrowDown />,
+      label: "Assigned Parcels",
+      path: "/dashboard/assigned-parcels",
+      riderOnly: true,
+    },
+    {
+      icon: <FiFileText size={20} />,
+      label: "Invoices",
+      path: "/dashboard/payment-history",
+    },
+
     {
       icon: <FiDollarSign size={20} />,
       label: "Pricing Plan",
@@ -65,10 +75,12 @@ const DashboardLayout = () => {
     { icon: <FiMap size={20} />, label: "Coverage Area", path: "/coverage" },
   ];
 
-  const filteredTopMenuItems =
+  const filteredMenuItems =
     role === "Admin"
-      ? topMenuItems
-      : topMenuItems.filter((item) => !item.adminOnly);
+      ? menuItems.filter((item) => !item.riderOnly)
+      : role === "Rider"
+        ? menuItems.filter((item) => !item.adminOnly)
+        : menuItems.filter((item) => !item.adminOnly && !item.riderOnly);
 
   const handleLogOut = () => {
     logOut()
@@ -96,16 +108,18 @@ const DashboardLayout = () => {
           {" "}
           <div className="flex items-center min-h-[64px] border-b border-gray-200  ">
             {sidebarOpen ? (
-              <div className="flex items-center relative ">
-                <img
-                  src={logoIcon}
-                  alt="ZapShift Icon"
-                  className="h-10 w-[30px] relative"
-                />
-                <span className="font-extrabold text-2xl text-[#303030] ml-2 absolute -bottom-1 left-1">
-                  ZapShift
-                </span>
-              </div>
+              <Link to="/">
+                <div className="flex items-center relative ">
+                  <img
+                    src={logoIcon}
+                    alt="ZapShift Icon"
+                    className="h-10 w-[30px] relative"
+                  />
+                  <span className="font-extrabold text-2xl text-[#303030] ml-2 absolute -bottom-1 left-1">
+                    ZapShift
+                  </span>
+                </div>
+              </Link>
             ) : (
               <img
                 src={logoIcon}
@@ -125,7 +139,7 @@ const DashboardLayout = () => {
               </h2>
             )}
             <div className="space-y-1">
-              {filteredTopMenuItems.map((item, index) => (
+              {filteredMenuItems.map((item, index) => (
                 <NavLink
                   to={item.path}
                   key={index}
@@ -201,7 +215,7 @@ const DashboardLayout = () => {
               MENU
             </h2>
             <div className="space-y-1">
-              {filteredTopMenuItems.map((item, index) => (
+              {filteredMenuItems.map((item, index) => (
                 <NavLink
                   to={item.path}
                   key={index}

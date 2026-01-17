@@ -8,9 +8,9 @@ import {
   MdLocationOn,
   MdPhone,
   MdEmail,
-  MdStar,
 } from "react-icons/md";
 import { FaMotorcycle } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 const AssignRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,8 +18,8 @@ const AssignRiders = () => {
   const [selectedParcel, setSelectedParcel] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRider, setSelectedRider] = useState(null);
-
-  const { data: parcels = [] } = useQuery({
+  /* Fetching unassigned paid parcels data for the page */
+  const { data: parcels = [], refetch } = useQuery({
     queryKey: ["parcels", "Pending-pickup"],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -28,7 +28,7 @@ const AssignRiders = () => {
       return res.data;
     },
   });
-
+  /*Fetching riders data for the modal */
   const { data: riders = [], isLoading: ridersLoading } = useQuery({
     queryKey: ["riders", selectedParcel?.senderDistrict],
     enabled: isModalOpen && !!selectedParcel,
@@ -53,14 +53,28 @@ const AssignRiders = () => {
   };
 
   const handleAssignRider = () => {
-    if (!selectedParcel || !selectedRider) return;
+    console.log("rider selected: ", selectedRider);
+    console.log("for parcel: ", selectedParcel);
 
-    console.log("Assigning:", {
-      parcelId: selectedParcel._id,
+    const assignedRiderInfo = {
       riderId: selectedRider._id,
       riderName: selectedRider.name,
-    });
+      riderPhone: selectedRider.phoneNo,
+      riderEmail: selectedRider.email,
+    };
 
+    axiosSecure
+      .patch(`/parcels/${selectedParcel._id}`, assignedRiderInfo)
+      .then((res) => {
+        if (
+          res.data.updatedParcel.modifiedCount === 1 &&
+          res.data.updatedRider.modifiedCount === 1
+        ) {
+          refetch();
+          toast.success("Rider assigned successfully!");
+          console.log(res.data);
+        }
+      });
     handleCloseModal();
   };
 
@@ -168,7 +182,7 @@ const AssignRiders = () => {
                       key={rider._id}
                       onClick={() => setSelectedRider(rider)}
                       className={`border-2 rounded-xl p-4 cursor-pointer transition ${
-                        selectedRider?._id === rider._id /*Mark ID comparison */
+                        selectedRider?._id === rider._id /*Compare IDs */
                           ? "border-green-500 bg-green-50"
                           : "border-gray-200 hover:border-green-300"
                       }`}

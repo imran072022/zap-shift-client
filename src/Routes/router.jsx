@@ -18,6 +18,8 @@ import UsersManagement from "../Pages/Dashboard/UsersManagement/UsersManagement"
 import AdminRoute from "./AdminRoute";
 import Forbidden403 from "../Components/Forbidden403";
 import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
+import AssignedParcels from "../Pages/Dashboard/AssignedParcels/AssignedParcels";
+import NotFoundPage404 from "../Components/NotFoundPage404";
 
 export const router = createBrowserRouter([
   {
@@ -91,6 +93,7 @@ export const router = createBrowserRouter([
         path: "payment-history",
         Component: PaymentHistory,
       },
+      /*Admin only routes */
       {
         path: "rider-applications",
         element: (
@@ -115,10 +118,20 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+
+      /*Rider Only routes */
+      {
+        path: "assigned-parcels",
+        Component: AssignedParcels,
+      },
     ],
   },
   {
-    path: "forbidden-route",
+    path: "forbidden",
     Component: Forbidden403,
+  },
+  {
+    path: "*",
+    Component: NotFoundPage404,
   },
 ]);
