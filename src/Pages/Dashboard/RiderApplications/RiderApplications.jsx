@@ -50,6 +50,7 @@ const RiderApplications = () => {
       }
     });
   };
+
   return (
     <div>
       <h2 className="font-extrabold text-[#03373D] text-5xl mb-10">

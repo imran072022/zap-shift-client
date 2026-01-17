@@ -15,7 +15,7 @@ const PrivateRoute = ({ children }) => {
         to="/login"
         state={{
           from: location,
-          message: "Your are not authorized to access this page!",
+          message: "You are not authorized to access this page!",
         }}
       ></Navigate>
     );

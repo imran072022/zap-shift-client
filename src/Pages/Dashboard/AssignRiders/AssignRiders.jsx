@@ -23,7 +23,7 @@ const AssignRiders = () => {
     queryKey: ["parcels", "Pending-pickup"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        "/parcels?deliveryStatus=Pending-pickup"
+        "/parcels?deliveryStatus=Pending-pickup",
       );
       return res.data;
     },
@@ -34,7 +34,7 @@ const AssignRiders = () => {
     enabled: isModalOpen && !!selectedParcel,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/riders?approvalStatus=Approved&district=${selectedParcel.senderDistrict}&workingStatus=Available`
+        `/riders?approvalStatus=Approved&district=${selectedParcel.senderDistrict}&workingStatus=Available`,
       );
       return res.data;
     },
@@ -119,6 +119,7 @@ const AssignRiders = () => {
         </table>
       </div>
 
+      {/*Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white w-4xl rounded-2xl shadow-xl flex flex-col max-h-[80vh]">
