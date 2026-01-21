@@ -11,7 +11,7 @@ const Navbar = () => {
   const navItems = [
     { to: "/dashboard", name: "Dashboard" },
     { to: "/coverage", name: "Coverage" },
-    { to: "/about-us", name: "Average Us" },
+    { to: "/tracking-parcel/:trackingId", name: "Track Order" },
     { to: "/pricing", name: "Pricing" },
     { to: "/be-rider", name: "Be a Rider" },
     { to: "/send-parcel", name: "Send Parcel" },

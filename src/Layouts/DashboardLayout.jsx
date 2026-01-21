@@ -16,6 +16,7 @@ import {
   FiX,
 } from "react-icons/fi";
 import { FaMotorcycle, FaUsers } from "react-icons/fa6";
+import { FaHistory } from "react-icons/fa";
 import { CgMenuLeft } from "react-icons/cg";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import logoIcon from "../assets/logoIcon.png";
@@ -23,6 +24,7 @@ import profileIcon from "../assets/profile.png";
 import useRole from "../Hooks/useRole";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
+import { icon } from "leaflet";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -34,7 +36,11 @@ const DashboardLayout = () => {
   // Menu items
   const menuItems = [
     { icon: <FiHome size={20} />, label: "Dashboard", path: "/dashboard" },
-    { icon: <FiPackage size={20} />, label: "Deliveries", path: "/deliveries" },
+    {
+      icon: <FiPackage size={20} />,
+      label: "Deliveries",
+      path: "/dashboard/deliveries",
+    },
     /*Admin only routes */
     {
       icon: <FiShoppingBag size={20} />,
@@ -61,6 +67,13 @@ const DashboardLayout = () => {
       path: "/dashboard/assigned-parcels",
       riderOnly: true,
     },
+    {
+      icon: <FaHistory size={20} />,
+      label: "Delivery History",
+      path: "/dashboard/delivery-history",
+      riderOnly: true,
+    },
+    /*Common routes to all */
     {
       icon: <FiFileText size={20} />,
       label: "Invoices",
@@ -361,7 +374,7 @@ const DashboardLayout = () => {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-          <div className="max-w-full 2xl:max-w-7xl mx-auto bg-white p-8 rounded-2xl">
+          <div className="max-w-full 2xl:max-w-7xl mx-auto rounded-2xl">
             <Outlet />
           </div>
         </main>

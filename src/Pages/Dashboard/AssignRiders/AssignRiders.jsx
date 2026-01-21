@@ -61,6 +61,7 @@ const AssignRiders = () => {
       riderName: selectedRider.name,
       riderPhone: selectedRider.phoneNo,
       riderEmail: selectedRider.email,
+      trackingId: selectedParcel.trackingId,
     };
 
     axiosSecure

@@ -20,6 +20,11 @@ import Forbidden403 from "../Components/Forbidden403";
 import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
 import AssignedParcels from "../Pages/Dashboard/AssignedParcels/AssignedParcels";
 import NotFoundPage404 from "../Components/NotFoundPage404";
+import RiderRoute from "./RiderRoute";
+import AllDeliveries from "../Pages/Dashboard/AllDeliveries/AllDeliveries";
+import DeliveryHistory from "../Pages/Dashboard/DeliveryHistory/DeliveryHistory";
+import ParcelTracking from "../Pages/TrackingParcel/TrackingParcel";
+import DashboardOverview from "../Pages/Dashboard/DashboardOverview/DashboardOverview";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +58,10 @@ export const router = createBrowserRouter([
         ),
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
+      {
+        path: "tracking-parcel/:trackingId",
+        Component: ParcelTracking,
+      },
     ],
   },
   {
@@ -78,8 +87,12 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "my-parcels",
-        Component: MyParcels,
+        index: true,
+        Component: DashboardOverview,
+      },
+      {
+        path: "deliveries",
+        Component: AllDeliveries,
       },
       {
         path: "payment/:parcelId",
@@ -122,7 +135,19 @@ export const router = createBrowserRouter([
       /*Rider Only routes */
       {
         path: "assigned-parcels",
-        Component: AssignedParcels,
+        element: (
+          <RiderRoute>
+            <AssignedParcels></AssignedParcels>
+          </RiderRoute>
+        ),
+      },
+      {
+        path: "delivery-history",
+        element: (
+          <RiderRoute>
+            <DeliveryHistory></DeliveryHistory>
+          </RiderRoute>
+        ),
       },
     ],
   },

@@ -18,7 +18,7 @@ const SendParcel = () => {
   const receiverRegion = useWatch({ control, name: "receiverRegion" });
   const districtsByRegion = (region) => {
     const regionWiseDistricts = serviceCenters.filter(
-      (c) => c.region === region
+      (c) => c.region === region,
     );
     const districts = regionWiseDistricts.map((d) => d.district);
     return districts;
@@ -64,7 +64,7 @@ const SendParcel = () => {
               showConfirmButton: false,
               timer: 2500,
             });
-            navigate("/dashboard/my-parcels");
+            navigate("/dashboard/deliveries");
           }
         });
       }

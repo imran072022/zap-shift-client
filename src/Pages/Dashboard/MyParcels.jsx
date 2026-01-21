@@ -50,6 +50,7 @@ const MyParcels = () => {
       parcelName: parcel.parcelName,
       parcelId: parcel._id,
       senderEmail: parcel.senderEmail,
+      trackingId: parcel.trackingId,
     };
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
     console.log(res.data.url);
@@ -89,7 +90,11 @@ const MyParcels = () => {
                   {parcel?.paymentStatus === "paid" ? "Paid" : "Unpaid"}
                 </td>
                 <td>{parcel?.deliveryStatus}</td>
-                <td>{parcel?.trackingId}</td>
+                <td>
+                  <Link to={`/tracking-parcel/${parcel?.trackingId}`}>
+                    {parcel?.trackingId}
+                  </Link>
+                </td>
                 <td className="flex gap-2.5 ">
                   <button
                     onClick={() => handlePayment(parcel)}
